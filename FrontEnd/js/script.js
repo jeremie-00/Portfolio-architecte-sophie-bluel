@@ -1,4 +1,5 @@
 import { makeFetchRequest } from './modules/makeFetch.js';
+import { createGallery } from './modules/galleryManager.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
 
@@ -12,6 +13,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     const itemsGallery = await makeFetchRequest(urlWorks, curl)
-
+    createGallery(itemsGallery)
 
 })
