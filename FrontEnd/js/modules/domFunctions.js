@@ -12,3 +12,7 @@ export function loadStorage(key){
     return localStorage.getItem(key) 
 }
 
+export function hidden(element) {
+    element.style.display = 'none'
+}
+

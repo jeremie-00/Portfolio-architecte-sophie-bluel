@@ -1,5 +1,6 @@
-import { qs, qsa, createElement } from './domFunctions.js';
+import { qs, qsa, createElement, hidden } from './domFunctions.js';
 import { createGallery } from './galleryManager.js';
+import { admin } from './logManager.js';
 
 const createContainerFilter = () => {
     const h2Element = qs('#portfolio h2')
@@ -37,7 +38,7 @@ export function createFilterButtons(categories) {
         btn.setAttribute('data-index', item.id)
         btn.type = 'submit'
         containerFilter.appendChild(btn)
-    })    
+    })
 }
 
 export function resteColorButton(allBtns) {
@@ -50,6 +51,9 @@ export function filterCategory(itemsGallery) {
     const allBtns = qsa('.filter')
     const gallery = qs('.gallery')
     allBtns.forEach((btn) => {
+        if (admin()) {
+            hidden(btn)
+        }
         btn.addEventListener('click', () => {
             resteColorButton(allBtns)
             btn.classList.add('selected')
@@ -62,6 +66,7 @@ export function filterCategory(itemsGallery) {
                 createGallery(itemsGallery)
             }
         })
+
 
     })
 }

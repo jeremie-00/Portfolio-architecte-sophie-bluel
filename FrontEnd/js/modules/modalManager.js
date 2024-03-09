@@ -1,4 +1,5 @@
-import { qs, qsa, createElement } from './domFunctions.js';
+import { qs, qsa, createElement, hidden } from './domFunctions.js';
+import { admin } from './logManager.js';
 
 export function createLinkModal() {
     const h2Element = qs('#portfolio h2')
@@ -7,5 +8,8 @@ export function createLinkModal() {
     link.id = 'link-modal'
     link.innerHTML = `<i class="fa-regular fa-pen-to-square" href="#modal1"></i>  Modifier`
     h2Element.appendChild(link)
+    if (!admin()) {
+        hidden(link)
+    }
     return link
 }
