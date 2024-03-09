@@ -1,6 +1,7 @@
 import { makeFetchRequest } from './modules/makeFetch.js';
 import { createGallery } from './modules/galleryManager.js';
 import { createFilterButtons, resteColorButton, filterCategory } from './modules/filterManager.js';
+import { createLinkLog } from './modules/logManager.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
 
@@ -19,5 +20,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     createGallery(itemsGallery)
     createFilterButtons(categories)
     filterCategory(itemsGallery)
+
+    const linkLog = createLinkLog()
 
 })
