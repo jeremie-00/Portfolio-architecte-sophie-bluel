@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     link.style.fontWeight = 'bold'
     const formLogin = qs('#js-form-login')
 
+    function saveLocalStorage(key, data){
+        localStorage.setItem(key, data)   
+    }
+
     formLogin.addEventListener('submit', async (event) => {
         event.preventDefault()
         const email = formLogin.elements.email.value
@@ -34,21 +38,16 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
             const responseLogin = await makeFetchRequest(urlLogin, curl)
             
-            console.log(responseLogin)
-            
             if (responseLogin instanceof Error) {
-
-                console.error("Une erreur s'est produite lors de la requête :", responseLogin.message)
                 if (responseLogin.message === '401 Unauthorized' || responseLogin.message ==='404 Not Found') {
                     containerError.innerHTML = 'Email ou Mot de passe invalide.'
                 }else{
                     containerError.innerHTML = 'Une erreur s\'est produite lors de la connexion.'
                 }
-                
-
             } else {
-
-                console.log(responseLogin)
+                saveLocalStorage('userId', responseLogin.userId)
+                saveLocalStorage('token', responseLogin.token)
+                window.location.href = './../index.html'
             }
             
         }else{
