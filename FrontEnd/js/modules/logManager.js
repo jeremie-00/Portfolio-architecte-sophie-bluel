@@ -1,7 +1,7 @@
 import { qs, qsa, createElement, loadStorage } from './domFunctions.js';
 
 export const admin = () => {
-    if (loadStorage('userId') != null && loadStorage('token') != null){
+    if (loadStorage('admin') != null){
         return true
     }
     return false

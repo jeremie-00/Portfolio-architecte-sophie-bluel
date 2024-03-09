@@ -7,6 +7,7 @@ import { createLinkModal } from './modules/modalManager.js';
 import {qs, qsa, createElement, saveStorage, removeStorage, loadStorage } from './modules/domFunctions.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
+
     const urlWorks = "http://localhost:5678/api/works"
     const urlCategories = "http://localhost:5678/api/categories"
     const curl = {
@@ -24,17 +25,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     filterCategory(itemsGallery)
 
     const linkLog = createLinkLog()
-    const adminData = { 
-        'userId' : loadStorage('userId'),
-        'token'  : loadStorage('token')
-                }
+
+    const adminDataJSON = loadStorage('admin')
+    const adminData = JSON.parse(adminDataJSON)
+
     if (admin()) {
         linkLog.addEventListener('click', () => {
-            for (const key in adminData) {
-                if (adminData.hasOwnProperty(key)) {
-                    removeStorage(key);
-                }
-            }
+            removeStorage('admin')
         })
     }
 

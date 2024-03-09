@@ -41,8 +41,14 @@ document.addEventListener('DOMContentLoaded', async function () {
                     containerError.innerHTML = 'Une erreur s\'est produite lors de la connexion.'
                 }
             } else {
-                saveStorage('userId', responseLogin.userId)
-                saveStorage('token', responseLogin.token)
+                const adminData = { 
+                    'userId' : responseLogin.userId,
+                    'token'  : responseLogin.token,
+                    }
+                
+                const adminDataJSON = JSON.stringify(adminData)
+                saveStorage('admin', adminDataJSON)
+
                 window.location.href = './../index.html'
             }
             
