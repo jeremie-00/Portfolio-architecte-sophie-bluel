@@ -132,8 +132,19 @@ nav a {
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
+	position: relative;
 }
-
+/* Modifier */
+#link-modal {
+	position: absolute;
+	font-weight: 500;
+	font-size: 14px;
+	margin-left: 50px;
+	top: 8px;
+	text-decoration: none;
+	color: black;
+	font-family: 'Work Sans';
+}
 /* filtres */
 .filters {
 	display: flex;
@@ -212,7 +223,7 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
-	
+
 	cursor: pointer;
 }
 
