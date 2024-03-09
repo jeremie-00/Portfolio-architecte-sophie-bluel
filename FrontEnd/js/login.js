@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         localStorage.setItem(key, data)   
     }
 
+
     formLogin.addEventListener('submit', async (event) => {
         event.preventDefault()
         const email = formLogin.elements.email.value
