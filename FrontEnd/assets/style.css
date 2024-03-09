@@ -98,6 +98,14 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+/* lien log */
+nav a {
+	color: inherit;
+	text-decoration: none;
+}
+
+
 #introduction {
 	display: flex;
 	align-items: center;
