@@ -1,7 +1,7 @@
-import { qs, qsa, createElement } from './domFunctions.js';
+import { qs, qsa, createElement, loadStorage } from './domFunctions.js';
 
 export const admin = () => {
-    if (localStorage.getItem('userId') != null && localStorage.getItem('token') != null){
+    if (loadStorage('userId') != null && loadStorage('token') != null){
         return true
     }
     return false

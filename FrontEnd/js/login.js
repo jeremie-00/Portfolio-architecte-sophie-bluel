@@ -1,5 +1,5 @@
 import { makeFetchRequest } from './modules/makeFetch.js';
-import { qs, qsa, createElement } from './modules/domFunctions.js';
+import { qs, qsa, createElement, saveStorage, removeStorage, loadStorage } from './modules/domFunctions.js';
 import { createLinkLog } from './modules/logManager.js';
 import { isEmailValid, isPasswordValid } from './modules/checkForm.js';
 
@@ -7,11 +7,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     const link = createLinkLog()
     link.style.fontWeight = 'bold'
     const formLogin = qs('#js-form-login')
-
-    function saveLocalStorage(key, data){
-        localStorage.setItem(key, data)   
-    }
-
 
     formLogin.addEventListener('submit', async (event) => {
         event.preventDefault()
@@ -46,8 +41,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                     containerError.innerHTML = 'Une erreur s\'est produite lors de la connexion.'
                 }
             } else {
-                saveLocalStorage('userId', responseLogin.userId)
-                saveLocalStorage('token', responseLogin.token)
+                saveStorage('userId', responseLogin.userId)
+                saveStorage('token', responseLogin.token)
                 window.location.href = './../index.html'
             }
             
