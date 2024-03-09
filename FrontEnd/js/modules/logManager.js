@@ -21,7 +21,7 @@ export function createLinkLog() {
         link.href = "./pages/login.html"
     }
     log.appendChild(link)
-    return log
+    return link
 }
 
 
