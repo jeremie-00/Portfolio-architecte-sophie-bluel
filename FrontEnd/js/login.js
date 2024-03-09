@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         containerError.style.fontSize = '20px'
 
         if (isEmailValid(email) && isPasswordValid(password)) {
+            containerError.innerHTML = ''
             const login = {
                 "email": email,
                 "password": password
