@@ -84,6 +84,21 @@ document.addEventListener('DOMContentLoaded', async function () {
     
     closeModal.addEventListener("click", () => {
         modal.close()
-    })   
+    }) 
+
+    // const formPhoto = qs('#file')
+
+    // formPhoto.addEventListener('change', function() {
+    //     const fileInput = this
+    //     const maxSize = 4 * 1024 * 1024
+    //     if (fileInput.files.length > 0) {
+    //         const fileSize = fileInput.files[0].size
+    //         if (fileSize > maxSize) {
+    //             alert("La taille du fichier dépasse la limite de 4 Mo.")
+    //             fileInput.value = ""
+    //         }
+    //     }
+
+    // })
 
 })
