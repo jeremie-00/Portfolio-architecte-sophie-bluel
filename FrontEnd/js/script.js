@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     
     openModal.addEventListener("click", () => {
         modal.showModal()
+        const modal1 = qs('.content-modal-1')
+        const modal2 = qs('.content-modal-2')
         const retour = qs('.modal-retour')
         retour.style.opacity = 0
         retour.style.cursor = 'default'
@@ -65,11 +67,23 @@ document.addEventListener('DOMContentLoaded', async function () {
             //     figure.style.display = 'none'       
             // })
         })
+        const btnAjout = qs('#btn-ajout')
+        btnAjout.addEventListener('click', () =>{
+            modal1.style.display = 'none'
+            modal2.style.display = 'flex'
+            retour.style.opacity = 1
+            retour.style.cursor = 'pointer'
+        })
+        retour.addEventListener('click', () =>{
+            modal1.style.display = 'flex'
+            modal2.style.display = 'none'
+            retour.style.opacity = 0
+            retour.style.cursor = 'default'
+        })
     })
     
     closeModal.addEventListener("click", () => {
         modal.close()
-    })
-    
+    })   
 
 })
