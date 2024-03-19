@@ -4,10 +4,12 @@ import { createLinkLog } from './modules/logManager.js';
 import { isEmailValid, isPasswordValid } from './modules/checkForm.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
+    //lien login style 
     const link = createLinkLog()
     link.style.fontWeight = 'bold'
     link.style.cursor = 'default'
     link.style.setProperty('color', 'initial')
+    //render le lien inactif
     link.addEventListener('click', function(event) {
         event.preventDefault()
     })

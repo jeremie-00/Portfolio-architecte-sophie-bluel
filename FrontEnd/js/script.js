@@ -33,6 +33,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         linkLog.addEventListener('click', () => {
             removeStorage('admin')
         })
+        const banner = qs('.banner')
+        banner.style.height = '59px'
     }
 
 
