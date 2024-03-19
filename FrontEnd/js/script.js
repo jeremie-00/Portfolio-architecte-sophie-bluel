@@ -40,5 +40,36 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const openModal = createLinkModal()
 
+    const modal = qs('.modal');
+    const closeModal = qs(".modal-close");
+    
+    openModal.addEventListener("click", () => {
+        modal.showModal()
+        const retour = qs('.modal-retour')
+        retour.style.opacity = 0
+        retour.style.cursor = 'default'
+        const galleryModal = qs('.gallery-modal')
+        galleryModal.innerHTML = ''
+        itemsGallery.forEach((item) => {
+            const figure = createElement('figure')
+            const img = createElement('img')
+            const icone = createElement('i')
+            icone.className = "fa-solid fa-trash-can fa-xs"
+            icone.setAttribute('data-index', item.id)
+            figure.setAttribute('data-index', item.id)
+            img.src = item.imageUrl
+            figure.append(img, icone)
+            galleryModal.appendChild(figure)
+
+            // icone.addEventListener('click', () => {
+            //     figure.style.display = 'none'       
+            // })
+        })
+    })
+    
+    closeModal.addEventListener("click", () => {
+        modal.close()
+    })
+    
 
 })
