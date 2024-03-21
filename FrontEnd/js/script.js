@@ -1,8 +1,9 @@
 import { makeFetchRequest } from './modules/makeFetch.js';
-import { createGallery } from './modules/galleryManager.js';
+//import { createGallery } from './modules/galleryManager.js';
 import { createFilterButtons, resteColorButton, filterCategory, categoryModal } from './modules/filterManager.js';
 import { admin, createLinkLog } from './modules/logManager.js';
 import { createLinkModal } from './modules/modalManager.js';
+import { checkFormAjouter, validFileType, validFileSize } from './modules/checkForm.js'
 
 import { qs, qsa, createElement, saveStorage, removeStorage, loadStorage } from './modules/domFunctions.js';
 
@@ -19,12 +20,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const itemsGallery = await makeFetchRequest(urlWorks, curl)
     const categories = await makeFetchRequest(urlCategories, curl)
-    console.log(itemsGallery)
+
     const gallery = qs('.gallery')
     const galleryModal = qs('.gallery-modal')
-
-    createGallery(itemsGallery, gallery)
-    createGallery(itemsGallery, galleryModal)
 
     createFilterButtons(categories)
     filterCategory(itemsGallery)
@@ -55,12 +53,35 @@ document.addEventListener('DOMContentLoaded', async function () {
     const retour = qs('.modal-retour')
     const containerError = qs('.js-error')
 
+    const formAjout = qs('#ajouter')
+    const ajoutPhoto = qs('#file')
+    const titleInput = qs('#title')
+    const categorySelect = qs('#category')
+
+    const imgElement = createElement('img')
+    const previewDiv = qs('#imagePreview')
+    const choixImage = qs('#choixImage')
+
+    const restePreview = () => {
+        ajoutPhoto.value = ''
+        imgElement.src = ''
+        choixImage.style.display = 'flex'
+        previewDiv.innerHTML = ''
+        previewDiv.style.display = 'none'
+    }
+
+    const resteInput = () => {
+        titleInput.value = ''
+        categorySelect.value = ''
+    }
+
     const retourModal1 = () => {
         modal1.style.display = 'flex'
         modal2.style.display = 'none'
         retour.style.opacity = 0
         retour.style.cursor = 'default'
         restePreview()
+        resteInput()
     }
 
     const resteMessageError = () => containerError.innerHTML = ''
@@ -70,7 +91,13 @@ document.addEventListener('DOMContentLoaded', async function () {
         containerError.innerHTML = message
     }
 
+    const resteGeneral = () => {
+        restePreview()
+        resteInput()
+        resteMessageError()
+    }
 
+    resteGeneral()
 
     openModal.addEventListener("click", () => {
         modal.style.display = 'flex'
@@ -78,66 +105,76 @@ document.addEventListener('DOMContentLoaded', async function () {
         retour.style.opacity = 0
         retour.style.cursor = 'default'
         btnValider.disabled = true
-        const trash = qs('.fa-trash-can')
+
+    })
+
+    function createGallery(itemsGallery, container) {
+
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+    
+        const fragment = document.createDocumentFragment()
+    
         itemsGallery.forEach((item) => {
-            // const figure = createElement('figure')
-            // const img = createElement('img')
-            //console.log(item.id)
-            //const trash = qs('.fa-trash-can')
-            // icone.className = "fa-solid fa-trash-can fa-xs"
-            //trash.setAttribute('data-index', item.id)
-            // figure.setAttribute('data-index', item.id)
-            // img.src = item.imageUrl
-            // figure.append(img, icone)
-            // galleryModal.appendChild(figure)
-
-            // trash.addEventListener('click', async () => {
-            //     console.log(trash.getAttribute('data-index'))
-            //     // const id = icone.getAttribute('data-index')
-            //     // const curlDelete = {
-            //     //     method: 'DELETE',
-                            //accept: */*,
-            //     //     headers: {
-            //     //         'Authorization': `Bearer ${adminData.token}`
-            //     //     },
-            //     // }
-            //     // const deleteImage = await makeFetchRequest(urlWorks + `/${id}`, curlDelete)
-            //     // console.log(deleteImage)
-            // })
+            const figure = createElement('figure')
+            const img = createElement('img')
+    
+            figure.className = 'js-work'
+    
+            figure.setAttribute('data-index', item.id)
+    
+            img.src = item.imageUrl
+    
+            if (container.id === 'gallery') {
+                const figcaption = createElement('figcaption')
+                figcaption.innerHTML = item.title
+                figure.append(img, figcaption)
+            } else {
+                const icone = createElement('i')
+                icone.className = "fa-solid fa-trash-can fa-xs"
+                icone.setAttribute('data-index', item.id)
+                listenEvent(icone)
+                figure.append(img, icone)
+            }
+    
+            fragment.appendChild(figure)
         })
-        const allTrash = qsa('.fa-trash-can')
+    
+        container.appendChild(fragment)  
+    }
 
-        allTrash.forEach((trash) => {
-            trash.addEventListener('click', async () => {
-                const id = trash.getAttribute('data-index')
+    function listenEvent(icone) {
+        icone.addEventListener('click', async (event) => {
+            const trashIcon = event.target.closest('.fa-trash-can')
+    
+            if (trashIcon) {
+                const id = trashIcon.getAttribute('data-index')
+    
                 const curlDelete = {
                     method: 'DELETE',
-    
                     headers: {
                         'accept': '*/*',
                         'Authorization': `Bearer ${adminData.token}`
                     },
                 }
                 const deleteImage = await makeFetchRequest(urlWorks + `/${id}`, curlDelete)
-
+    
                 if (deleteImage) {
-                    //trash.closest('.gallery-item').remove()
                     const itemsGallery = await makeFetchRequest(urlWorks, curl)
                     createGallery(itemsGallery, gallery)
                     createGallery(itemsGallery, galleryModal)
-                }else{
+                } else {
                     console.log(deleteImage)
                 }
-            })
+            }
         })
+    }
 
-    })
+    createGallery(itemsGallery, gallery)
+    createGallery(itemsGallery, galleryModal)
 
-
-
-    
-
-    btnAjout.addEventListener('click', () => {
+    btnAjout.addEventListener('click', (e) => {
         modal1.style.display = 'none'
         modal2.style.display = 'flex'
         retour.style.opacity = 1
@@ -147,55 +184,19 @@ document.addEventListener('DOMContentLoaded', async function () {
     retour.addEventListener('click', () => {
         retourModal1()
     })
+
     closeModal.addEventListener("click", () => {
         modal.close()
         modal.style.display = 'none'
+        resteGeneral()
         retourModal1()
-        resteMessageError()
     })
 
-    const fileTypes = ["image/jpg", "image/png"]
-    function validFileType(file) {
-        for (var i = 0; i < fileTypes.length; i++) {
-            if (file.type === fileTypes[i]) {
-                return true
-            }
-        }
-        return false
-    }
-
-    function validFileSize(file) {
-        const maxSize = 4
-        const fileSizeInMegabytes = file.size / (1024 * 1024)
-        if (fileSizeInMegabytes >= maxSize) {
-            return false
-        }
-        return true
-    }
-
-    const ajoutPhoto = qs('#file')
-
-    const titleInput = qs('#title')
-    const categorySelect = qs('#category')
-    //const categoryPhoto = categorySelect.value;
-
-    const imgElement = createElement('img')
-    const previewDiv = qs('#imagePreview')
-    const choixImage = qs('#choixImage')
-
-    const restePreview = () => {
-        imgElement.src = ''
-        choixImage.style.display = 'flex'
-        previewDiv.innerHTML = ''
-        previewDiv.style.display = 'none'
-    }
-    const resteInput = () => {
-        titleInput.value = ''
-    }
-
     ajoutPhoto.addEventListener('change', function (event) {
+        event.preventDefault()
+        event.stopPropagation()
         const file = event.target.files[0]
-        //const fileSizeInBytes = file.size
+
         if (file && validFileType(file) && validFileSize(file)) {
             // Lire le contenu du fichier
             const reader = new FileReader()
@@ -207,10 +208,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                 previewDiv.innerHTML = ''
                 previewDiv.style.display = 'flex'
                 previewDiv.appendChild(imgElement)
+
+                checkFormAjouter(formAjout)
             }
 
             reader.readAsDataURL(file)
-           
+
         } else {
             restePreview()
             const fileSizeInMegabytes = file.size / (1024 * 1024)
@@ -222,46 +225,45 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     })
 
-
     modal2.addEventListener('change', () => {
-        console.log(ajoutPhoto.value)
-        if (ajoutPhoto && titleInput.value && categorySelect.value) {
-            btnValider.disabled = false
-        }
+        btnValider.disabled = checkFormAjouter(formAjout)
     })
-    
-    
-    btnValider.addEventListener('click', async () => {
-        const formData = new FormData()
-        formData.append('image', ajoutPhoto.files[0])
-        formData.append('title', titleInput.value)
-        formData.append('category', categorySelect.value)
+
+    const submitHandler = async function (event) {
+        event.preventDefault()
+        event.stopPropagation()
+        const formData = new FormData(this);
 
         const curlPost = {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${adminData.token}`
+                'Authorization': `Bearer ${adminData.token}`,
             },
             body: formData,
-        }
+        };
 
-        const postImage = await makeFetchRequest(urlWorks, curlPost)
-
+        const postImage = await makeFetchRequest(urlWorks, curlPost);
 
         if (postImage) {
+
+            restePreview()
+            resteInput()
+            modal.close()
+            retourModal1()
+            modal.style.display = 'none'
+
             const itemsGallery = await makeFetchRequest(urlWorks, curl)
             createGallery(itemsGallery, gallery)
             createGallery(itemsGallery, galleryModal)
-            modal.close()
-            modal.style.display = 'none'
-            restePreview()
-            resteInput()
-            retourModal1()
+
         } else {
-            messageError('Echec lors de la connection au server')
+            messageError('Echec lors de la connection au serveur')
         }
+    };
+
+    // Ajoutez l'écouteur d'événements en utilisant la fonction de rappel
+    formAjout.addEventListener('submit', submitHandler)
 
 
-    })
 
 })

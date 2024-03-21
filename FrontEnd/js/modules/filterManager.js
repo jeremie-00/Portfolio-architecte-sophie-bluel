@@ -50,6 +50,7 @@ export function resteColorButton(allBtns) {
 export function filterCategory(itemsGallery) {
     const allBtns = qsa('.filter')
     const gallery = qs('.gallery')
+
     allBtns.forEach((btn) => {
         if (admin()) {
             hidden(btn)
@@ -61,9 +62,9 @@ export function filterCategory(itemsGallery) {
             gallery.innerHTML = ''
             if (categoryId != 0) {
                 const filteredData = itemsGallery.filter(item => item.category.id === categoryId)
-                createGallery(filteredData)
+                createGallery(filteredData, gallery)
             } else {
-                createGallery(itemsGallery)
+                createGallery(itemsGallery, gallery)
             }
         })
 
