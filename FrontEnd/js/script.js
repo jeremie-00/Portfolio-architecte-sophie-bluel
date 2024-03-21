@@ -105,7 +105,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     openModal.addEventListener("click", () => {
         afficherElement(modal)
         modal.showModal()
-        btnValider.disabled = true
     })
 
     btnAjout.addEventListener('click', () => {
@@ -113,6 +112,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         afficherElement(modal2)
         retour.style.opacity = 1
         retour.style.cursor = 'pointer'
+        btnValider.disabled = true
     })
     const retourModal1 = () => {
         afficherElement(modal1)
@@ -121,7 +121,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         retour.style.cursor = 'default'
         restePreview()
         resteInput()
-        btnValider.disabled = checkFormAjouter(formAjout)
     }
     retour.addEventListener('click', () => {
         retourModal1()
