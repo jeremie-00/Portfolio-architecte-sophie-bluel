@@ -21,8 +21,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         const password = formLogin.elements.password.value
 
         const containerError = qs('.js-error')
-        containerError.style.color = 'rgba(220,0,0,1)'
-        containerError.style.fontSize = '20px'
 
         if (isEmailValid(email) && isPasswordValid(password)) {
             containerError.innerHTML = ''

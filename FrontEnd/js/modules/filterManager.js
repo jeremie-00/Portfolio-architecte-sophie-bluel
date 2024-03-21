@@ -70,3 +70,14 @@ export function filterCategory(itemsGallery) {
 
     })
 }
+
+export const categoryModal = (categories) => {
+    const contentCategory = qs('#category')
+    
+    categories.forEach(category => {
+        const option = createElement('option')
+        option.text = `${category.name}`
+        option.value = category.id
+        contentCategory.appendChild(option)
+    })
+}

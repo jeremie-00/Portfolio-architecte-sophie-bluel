@@ -49,7 +49,7 @@
 		</section>
 		<section id="portfolio">
 			<h2>Mes Projets</h2>
-			<div class="gallery">
+			<div id="gallery" class="gallery">
 			</div>
 		</section>
 		<section id="contact">
@@ -81,7 +81,9 @@
 		</div>
 		<div class="content-modal-1">
 			<h2 id="title-modal-1" class="title-modal">Galerie photo</h2>
-			<div class="gallery gallery-modal">
+			<div class="wrap-gallery-modal">
+				<div id="gallery-modal" class="gallery gallery-modal">
+				</div>
 			</div>
 			<hr />
 			<input id="btn-ajout" type="submit" value="Ajouter une photo">
@@ -89,19 +91,23 @@
 
 		<div class="content-modal-2">
 			<h2 id="title-modal-2" class="title-modal">Ajouter photo</h2>
+			<div class="js-error message-error"></div>
 			<form id="ajouter">
 				<div class="fichier">
-					<i class="fa-regular fa-image fa-5x"></i>
-					<label for="file" class="file-label">
-						+ Ajouter photo
-						<input type="file" id="file" name="photo" accept=".png, .jpg">
-					</label>
-					<span class="subtitle-fichier">jpg, png : 4mo max</span>
+					<div id="imagePreview"></div>
+					<div id="choixImage">
+						<i class="fa-regular fa-image fa-5x"></i>
+						<label for="file" class="file-label">
+							+ Ajouter photo
+							<input type="file" id="file" name="photo" accept=".png, .jpg" multiple>
+						</label>
+						<span class="subtitle-fichier">jpg, png : 4mo max</span>
+					</div>
 				</div>
 				<label for="title">Titre</label>
 				<input type="text" name="title" id="title">
 				<label for="category">Catégorie</label>
-				<select class="select" name="category"></select>
+				<select id="category" class="select" name="category"></select>
 			</form>
 			<hr />
 			<input id="btn-valide" type="submit" value="Valider">

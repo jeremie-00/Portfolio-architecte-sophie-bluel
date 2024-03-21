@@ -362,7 +362,7 @@ footer nav ul {
 	background-color: white;
 	border-radius: 15px;
 	border: none;
-	display: flex;
+	display: none;
 	flex-direction: column;
 	align-items: center;
 }
@@ -406,14 +406,25 @@ footer nav ul {
 	margin: 20px;
 }
 
+.wrap-gallery-modal {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 471px;
+	align-items: start;
+	overflow: auto;	
+}
+
 .gallery-modal {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: repeat(5, 1fr);
+	grid-auto-rows: 1fr;
 	grid-column-gap: 10px;
 	grid-row-gap: 30px;
 	align-self: center;
 	width: 90%;
 	padding: 30px 0 40px;
+	
 }
 
 .gallery-modal figure {
@@ -476,9 +487,9 @@ hr {
 	height: 169px;
 	background-color: #E8F1F6;
 	gap: 10px;
-	padding: 8px;
 	border-radius: 3px;
 	margin: 30px 0;
+	overflow: hidden;
 }
 
 .fichier .fa-image {
@@ -487,7 +498,7 @@ hr {
 
 .file-label {
 	width: 173px;
-  	height: 36px;
+	height: 36px;
 	cursor: pointer;
 	border-radius: 25px;
 	background-color: #b3b3b344;
@@ -496,10 +507,12 @@ hr {
 	color: #306685;
 	font-weight: bold;
 }
+
 .subtitle-fichier {
 	font-size: 10px;
-	color:#444444;
+	color: #444444;
 }
+
 input[type="file"] {
 	opacity: 0;
 	position: relative;
@@ -523,4 +536,40 @@ input[type="file"] {
 	background-color: transparent;
 	border: 1px solid grey;
 	margin-bottom: 30px;
+}
+
+#choixImage {
+	border: 1px solid black;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	gap: 10px;
+}
+
+.image {
+	width: 100%;
+	object-fit: cover;
+}
+
+#imagePreview {
+	border: 1px solid black;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width: 130px;
+	height: 193px;
+}
+
+#btn-valide[disabled] {
+	background-color: grey;
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.message-error {
+	height: 20px;
+	color: rgb(220, 0, 0);
+	font-size: 20px;
 }

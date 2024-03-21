@@ -1,33 +1,33 @@
 export function isEmailValid(email) {
-    const regex = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-    return regex.test(email);
+    const regex = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+    return regex.test(email)
 }
 
 export function isPasswordValid(password) {
 
     if (password.length < 6) {
-        return false;
+        return false
     }
 
-    // const specialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    // const specialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/
     // if (!specialCharacters.test(password)) {
-    //     return false;
+    //     return false
     // }
 
-    const numbers = /\d/;
+    const numbers = /\d/
     if (!numbers.test(password)) {
-        return false;
+        return false
     }
 
-    const uppercaseLetters = /[A-Z]/;
+    const uppercaseLetters = /[A-Z]/
     if (!uppercaseLetters.test(password)) {
-        return false;
+        return false
     }
 
-    const lowercaseLetters = /[a-z]/;
+    const lowercaseLetters = /[a-z]/
     if (!lowercaseLetters.test(password)) {
-        return false;
+        return false
     }
 
-    return true;
+    return true
 }
