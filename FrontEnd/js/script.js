@@ -1,5 +1,5 @@
 import { makeFetchRequest } from './modules/makeFetch.js';
-//import { createGallery } from './modules/galleryManager.js';
+import { createGallery } from './modules/galleryManager.js';
 import { createFilterButtons, resteColorButton, filterCategory, categoryModal } from './modules/filterManager.js';
 import { admin, createLinkLog } from './modules/logManager.js';
 import { createLinkModal } from './modules/modalManager.js';
@@ -7,16 +7,29 @@ import { checkFormAjouter, validFileType, validFileSize } from './modules/checkF
 
 import { qs, qsa, createElement, saveStorage, removeStorage, loadStorage } from './modules/domFunctions.js';
 
+const urlWorks = "http://localhost:5678/api/works"
+const curl = {
+    method: 'GET',
+    headers: {
+        'accept': 'application/json',
+    },
+}
+
+const galleries = {
+    'gallery'      : qs('.gallery'),
+    'galleryModal' : qs('.gallery-modal')
+}
+
+const adminDataJSON = loadStorage('admin')
+const adminData = JSON.parse(adminDataJSON)
+
+export { adminData, urlWorks, curl, galleries }
+
 document.addEventListener('DOMContentLoaded', async function () {
 
-    const urlWorks = "http://localhost:5678/api/works"
+    
     const urlCategories = "http://localhost:5678/api/categories"
-    const curl = {
-        method: 'GET',
-        headers: {
-            'accept': 'application/json',
-        },
-    }
+
 
     const itemsGallery = await makeFetchRequest(urlWorks, curl)
     const categories = await makeFetchRequest(urlCategories, curl)
@@ -29,9 +42,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     categoryModal(categories)
 
     const linkLog = createLinkLog()
-
-    const adminDataJSON = loadStorage('admin')
-    const adminData = JSON.parse(adminDataJSON)
 
     if (admin()) {
         linkLog.addEventListener('click', () => {
@@ -75,15 +85,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         categorySelect.value = ''
     }
 
-    const retourModal1 = () => {
-        modal1.style.display = 'flex'
-        modal2.style.display = 'none'
-        retour.style.opacity = 0
-        retour.style.cursor = 'default'
-        restePreview()
-        resteInput()
-    }
-
     const resteMessageError = () => containerError.innerHTML = ''
 
     const messageError = (message) => {
@@ -102,74 +103,100 @@ document.addEventListener('DOMContentLoaded', async function () {
     openModal.addEventListener("click", () => {
         modal.style.display = 'flex'
         modal.showModal()
-        retour.style.opacity = 0
-        retour.style.cursor = 'default'
-        btnValider.disabled = true
 
+        btnValider.disabled = true
     })
 
-    function createGallery(itemsGallery, container) {
-
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
-    
-        const fragment = document.createDocumentFragment()
-    
-        itemsGallery.forEach((item) => {
-            const figure = createElement('figure')
-            const img = createElement('img')
-    
-            figure.className = 'js-work'
-    
-            figure.setAttribute('data-index', item.id)
-    
-            img.src = item.imageUrl
-    
-            if (container.id === 'gallery') {
-                const figcaption = createElement('figcaption')
-                figcaption.innerHTML = item.title
-                figure.append(img, figcaption)
-            } else {
-                const icone = createElement('i')
-                icone.className = "fa-solid fa-trash-can fa-xs"
-                icone.setAttribute('data-index', item.id)
-                listenEvent(icone)
-                figure.append(img, icone)
-            }
-    
-            fragment.appendChild(figure)
-        })
-    
-        container.appendChild(fragment)  
+    btnAjout.addEventListener('click', () => {
+        modal1.style.display = 'none'
+        modal2.style.display = 'flex'
+        retour.style.opacity = 1
+        retour.style.cursor = 'pointer'
+    })
+    const retourModal1 = () => {
+        modal1.style.display = 'flex'
+        modal2.style.display = 'none'
+        retour.style.opacity = 0
+        retour.style.cursor = 'default'
+        restePreview()
+        resteInput()
     }
+    retour.addEventListener('click', () => {
+        retourModal1()
+    })
 
-    function listenEvent(icone) {
-        icone.addEventListener('click', async (event) => {
-            const trashIcon = event.target.closest('.fa-trash-can')
+    closeModal.addEventListener("click", () => {
+        modal.close()
+        modal.style.display = 'none'
+        resteGeneral()
+        retourModal1()
+    })
+
+
+
+
+    // function createGallery(itemsGallery, container) {
+
+    //     while (container.firstChild) {
+    //         container.removeChild(container.firstChild);
+    //     }
     
-            if (trashIcon) {
-                const id = trashIcon.getAttribute('data-index')
+    //     const fragment = document.createDocumentFragment()
     
-                const curlDelete = {
-                    method: 'DELETE',
-                    headers: {
-                        'accept': '*/*',
-                        'Authorization': `Bearer ${adminData.token}`
-                    },
-                }
-                const deleteImage = await makeFetchRequest(urlWorks + `/${id}`, curlDelete)
+    //     itemsGallery.forEach((item) => {
+    //         const figure = createElement('figure')
+    //         const img = createElement('img')
     
-                if (deleteImage) {
-                    const itemsGallery = await makeFetchRequest(urlWorks, curl)
-                    createGallery(itemsGallery, gallery)
-                    createGallery(itemsGallery, galleryModal)
-                } else {
-                    console.log(deleteImage)
-                }
-            }
-        })
-    }
+    //         figure.className = 'js-work'
+    
+    //         figure.setAttribute('data-index', item.id)
+    
+    //         img.src = item.imageUrl
+    
+    //         if (container.id === 'gallery') {
+    //             const figcaption = createElement('figcaption')
+    //             figcaption.innerHTML = item.title
+    //             figure.append(img, figcaption)
+    //         } else {
+    //             const icone = createElement('i')
+    //             icone.className = "fa-solid fa-trash-can fa-xs"
+    //             icone.setAttribute('data-index', item.id)
+    //             listenEvent(icone)
+    //             figure.append(img, icone)
+    //         }
+    
+    //         fragment.appendChild(figure)
+    //     })
+    
+    //     container.appendChild(fragment)  
+    // }
+
+    // function listenEvent(icone) {
+    //     icone.addEventListener('click', async (event) => {
+    //         const trashIcon = event.target.closest('.fa-trash-can')
+    
+    //         if (trashIcon) {
+    //             const id = trashIcon.getAttribute('data-index')
+    
+    //             const curlDelete = {
+    //                 method: 'DELETE',
+    //                 headers: {
+    //                     'accept': '*/*',
+    //                     'Authorization': `Bearer ${adminData.token}`
+    //                 },
+    //             }
+    //             const deleteImage = await makeFetchRequest(urlWorks + `/${id}`, curlDelete)
+    
+    //             if (deleteImage) {
+    //                 const itemsGallery = await makeFetchRequest(urlWorks, curl)
+    //                 createGallery(itemsGallery, gallery)
+    //                 createGallery(itemsGallery, galleryModal)
+    //             } else {
+    //                 console.log(deleteImage)
+    //             }
+    //         }
+    //     })
+    // }
 
     createGallery(itemsGallery, gallery)
     createGallery(itemsGallery, galleryModal)
