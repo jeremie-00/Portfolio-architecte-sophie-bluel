@@ -477,6 +477,9 @@ hr {
 	width: 420px;
 	gap: 11.5px;
 }
+#ajouter hr{
+	margin: 1px 0;
+}
 
 .fichier {
 	display: flex;
