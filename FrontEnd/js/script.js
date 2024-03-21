@@ -121,6 +121,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         retour.style.cursor = 'default'
         restePreview()
         resteInput()
+        btnValider.disabled = checkFormAjouter(formAjout)
     }
     retour.addEventListener('click', () => {
         retourModal1()
