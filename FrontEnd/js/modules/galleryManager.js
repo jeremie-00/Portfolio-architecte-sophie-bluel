@@ -1,41 +1,7 @@
 import { qs, qsa, createElement } from './domFunctions.js';
+import { makeFetchRequest } from './makeFetch.js';
 
-
-
-const listenEvent = () => {
-    const allTrash = qsa('.fa-trash-can')
-    allTrash.forEach((trash) => {
-        trash.addEventListener('click', async (event) => {
-            const trashIcon = event.target.closest('.fa-trash-can')
-
-            if (trashIcon) {
-                const id = trashIcon.getAttribute('data-index')
-
-
-                const curlDelete = {
-                    method: 'DELETE',
-
-                    headers: {
-                        'accept': '*/*',
-                        'Authorization': `Bearer ${adminData.token}`
-                    },
-                }
-                const deleteImage = await makeFetchRequest(urlWorks + `/${id}`, curlDelete)
-                // const deleteImage = true
-                if (deleteImage) {
-                    
-                    const itemsGallery = await makeFetchRequest(urlWorks, curl)
-                    createGallery(itemsGallery, gallery)
-                    createGallery(itemsGallery, galleryModal)
-
-                } else {
-                    console.log(deleteImage)
-                }
-            }
-        })
-    })
-}
-
+import { adminData, urlWorks, curl, galleries } from '../script.js';
 
 export function createGallery(itemsGallery, container) {
 
@@ -63,15 +29,39 @@ export function createGallery(itemsGallery, container) {
             const icone = createElement('i')
             icone.className = "fa-solid fa-trash-can fa-xs"
             icone.setAttribute('data-index', item.id)
-            listenEvent()
+            listenEvent(icone)
             figure.append(img, icone)
         }
 
         fragment.appendChild(figure)
     })
 
-    container.appendChild(fragment)
-
-
+    container.appendChild(fragment)  
 }
 
+function listenEvent(icone) {
+    icone.addEventListener('click', async (event) => {
+        const trashIcon = event.target.closest('.fa-trash-can')
+
+        if (trashIcon) {
+            const id = trashIcon.getAttribute('data-index')
+
+            const curlDelete = {
+                method: 'DELETE',
+                headers: {
+                    'accept': '*/*',
+                    'Authorization': `Bearer ${adminData.token}`
+                },
+            }
+            const deleteImage = await makeFetchRequest(urlWorks + `/${id}`, curlDelete)
+
+            if (deleteImage) {
+                const itemsGallery = await makeFetchRequest(urlWorks, curl)
+                createGallery(itemsGallery, galleries.gallery)
+                createGallery(itemsGallery, galleries.galleryModal)
+            } else {
+                console.log(deleteImage)
+            }
+        }
+    })
+}
