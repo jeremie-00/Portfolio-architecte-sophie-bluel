@@ -476,7 +476,7 @@ hr {
 	flex-direction: column;
 	justify-content: center;
 	width: 90%;
-	gap: 12px;
+	gap: 8px;
 }
 
 .fichier {

@@ -31,3 +31,35 @@ export function isPasswordValid(password) {
 
     return true
 }
+
+export function checkFormAjouter(formAjout) {
+    for (let i = 0; i < formAjout.length; i++) {
+        const element = formAjout[i]
+        if (element.type !== "submit") {
+            if (!element.value) {
+                return true
+            }
+        }
+    }
+    return false
+}
+
+
+export function validFileType(file) {
+    const fileTypes = ["image/jpg", "image/png"]
+    for (var i = 0; i < fileTypes.length; i++) {
+        if (file.type === fileTypes[i]) {
+            return true
+        }
+    }
+    return false
+}
+
+export function validFileSize(file) {
+    const maxSize = 4
+    const fileSizeInMegabytes = file.size / (1024 * 1024)
+    if (fileSizeInMegabytes >= maxSize) {
+        return false
+    }
+    return true
+}

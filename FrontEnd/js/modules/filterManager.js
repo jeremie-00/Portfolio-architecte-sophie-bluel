@@ -80,4 +80,6 @@ export const categoryModal = (categories) => {
         option.value = category.id
         contentCategory.appendChild(option)
     })
+
+    contentCategory.value = ''
 }
