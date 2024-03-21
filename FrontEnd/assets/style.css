@@ -372,7 +372,7 @@ footer nav ul {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	width: 80%;
+	width: 420px;
 }
 
 .btn-modal {
@@ -410,9 +410,9 @@ footer nav ul {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	height: 471px;
+	height: 475px;
 	align-items: start;
-	overflow: auto;	
+	overflow: auto;
 }
 
 .gallery-modal {
@@ -422,9 +422,9 @@ footer nav ul {
 	grid-column-gap: 10px;
 	grid-row-gap: 30px;
 	align-self: center;
-	width: 90%;
+	width: 100%;
 	padding: 30px 0 40px;
-	
+
 }
 
 .gallery-modal figure {
@@ -448,9 +448,11 @@ footer nav ul {
 
 hr {
 	border: none;
-	border-bottom: 1px solid #B3B3B3;
-	width: 90%;
-	margin: 20px;
+	width: 100%;
+	height: 1px;
+  	background-color: #B3B3B3;
+	margin-top: 4px;
+	margin-bottom: 11px;
 }
 
 .modal input[type="submit"] {
@@ -458,7 +460,6 @@ hr {
 	width: 237px;
 	border: none;
 	cursor: pointer;
-	margin: 15px auto;
 }
 
 .content-modal-2 {
@@ -473,8 +474,8 @@ hr {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	width: 90%;
-	gap: 8px;
+	width: 420px;
+	gap: 11.5px;
 }
 
 .fichier {
@@ -522,22 +523,56 @@ input[type="file"] {
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-	border: 1px solid grey;
+	/* border: 1px solid grey; */
 	margin-bottom: 12px;
+	outline: none;
+  	padding-left: 15px;
+}
+
+.custom-select {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+}
+
+.custom-select select {
+	display: none;
+	/* border: 1px solid grey; */
+}
+
+.custom-select .select {
+	display: block;
+	width: 100%;
+	padding: 8px;
+	font-size: 16px;
+	border-radius: 4px;
+	appearance: none;
+}
+
+.custom-select i {
+	position: absolute;
+	top: 18px;
+	right: 30px;
+	/* transform: translateY(-50%); */
+	color: #6C6C6C;
+	pointer-events: none; /* permet aux clics de passer à travers */	
 }
 
 .select {
+	width: 100%;
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	background-color: transparent;
-	border: 1px solid grey;
+	/* border: 1px solid grey; */
 	margin-bottom: 30px;
+	text-indent: 10px;
+	cursor: pointer;
 }
 
 #choixImage {
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -552,7 +587,7 @@ input[type="file"] {
 }
 
 #imagePreview {
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	display: none;
 	align-items: center;
 	justify-content: center;

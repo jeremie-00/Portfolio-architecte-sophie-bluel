@@ -15,8 +15,8 @@ const curl = {
     },
 }
 const galleries = {
-    'gallery'      : qs('.gallery'),
-    'galleryModal' : qs('.gallery-modal')
+    'gallery': qs('.gallery'),
+    'galleryModal': qs('.gallery-modal')
 }
 
 const adminDataJSON = loadStorage('admin')
@@ -33,8 +33,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     createGallery(itemsGallery, galleries.gallery)
     createGallery(itemsGallery, galleries.galleryModal)
-
-    
 
     createFilterButtons(categories)
     categoryModal(categories)
@@ -73,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const choixImage = qs('#choixImage')
 
 
-    
+
     const restePreview = () => {
         ajoutPhoto.value = ''
         imgElement.src = ''
@@ -154,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 afficherElement(previewDiv)
                 previewDiv.appendChild(imgElement)
 
-                checkFormAjouter(formAjout)
+                btnValider.disabled = checkFormAjouter(formAjout)
             }
 
             reader.readAsDataURL(file)
@@ -176,8 +174,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const submitHandler = async function (event) {
         event.preventDefault()
-        event.stopPropagation()
-        const formData = new FormData(this);
+
+        const formData = new FormData(this)
 
         const curlPost = {
             method: 'POST',
@@ -185,9 +183,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                 'Authorization': `Bearer ${adminData.token}`,
             },
             body: formData,
-        };
+        }
 
-        const postImage = await makeFetchRequest(urlWorks, curlPost);
+        const postImage = await makeFetchRequest(urlWorks, curlPost)
 
         if (postImage) {
 
@@ -204,11 +202,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         } else {
             messageError('Echec lors de la connection au serveur')
         }
-    };
+    }
 
-    // Ajoutez l'écouteur d'événements en utilisant la fonction de rappel
     formAjout.addEventListener('submit', submitHandler)
-
-
-
 })
