@@ -1,4 +1,4 @@
-import { qs, qsa, createElement, hidden } from './domFunctions.js';
+import { qs, qsa, createElement, masquerElement } from './domFunctions.js';
 import { createGallery } from './galleryManager.js';
 import { admin } from './logManager.js';
 
@@ -53,7 +53,7 @@ export function filterCategory(itemsGallery) {
 
     allBtns.forEach((btn) => {
         if (admin()) {
-            hidden(btn)
+            masquerElement(btn)
         }
         btn.addEventListener('click', () => {
             resteColorButton(allBtns)

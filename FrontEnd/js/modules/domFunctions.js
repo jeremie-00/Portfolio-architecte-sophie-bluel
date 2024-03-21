@@ -12,7 +12,12 @@ export function loadStorage(key){
     return localStorage.getItem(key) 
 }
 
-export function hidden(element) {
+export function masquerElement(element) {
     element.style.display = 'none'
 }
+
+export function afficherElement (element) {
+    element.style.display = 'flex'
+}
+
 

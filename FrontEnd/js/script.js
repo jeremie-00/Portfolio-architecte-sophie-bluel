@@ -5,7 +5,7 @@ import { admin, createLinkLog } from './modules/logManager.js';
 import { createLinkModal } from './modules/modalManager.js';
 import { checkFormAjouter, validFileType, validFileSize } from './modules/checkForm.js'
 
-import { qs, qsa, createElement, saveStorage, removeStorage, loadStorage } from './modules/domFunctions.js';
+import { qs, qsa, createElement, saveStorage, removeStorage, loadStorage, masquerElement, afficherElement } from './modules/domFunctions.js';
 
 const urlWorks = "http://localhost:5678/api/works"
 const curl = {
@@ -34,10 +34,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     createGallery(itemsGallery, galleries.gallery)
     createGallery(itemsGallery, galleries.galleryModal)
 
-    filterCategory(itemsGallery)
+    
 
     createFilterButtons(categories)
     categoryModal(categories)
+
+    filterCategory(itemsGallery)
 
     const linkLog = createLinkLog()
 
@@ -75,9 +77,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     const restePreview = () => {
         ajoutPhoto.value = ''
         imgElement.src = ''
-        choixImage.style.display = 'flex'
+        afficherElement(choixImage)
         previewDiv.innerHTML = ''
-        previewDiv.style.display = 'none'
+        masquerElement(previewDiv)
     }
 
     const resteInput = () => {
@@ -103,20 +105,20 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
     openModal.addEventListener("click", () => {
-        modal.style.display = 'flex'
+        afficherElement(modal)
         modal.showModal()
         btnValider.disabled = true
     })
 
     btnAjout.addEventListener('click', () => {
-        modal1.style.display = 'none'
-        modal2.style.display = 'flex'
+        masquerElement(modal1)
+        afficherElement(modal2)
         retour.style.opacity = 1
         retour.style.cursor = 'pointer'
     })
     const retourModal1 = () => {
-        modal1.style.display = 'flex'
-        modal2.style.display = 'none'
+        afficherElement(modal1)
+        masquerElement(modal2)
         retour.style.opacity = 0
         retour.style.cursor = 'default'
         restePreview()
@@ -128,30 +130,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     closeModal.addEventListener("click", () => {
         modal.close()
-        modal.style.display = 'none'
+        masquerElement(modal)
         resteGeneral()
         retourModal1()
     })
 
 
-
-    btnAjout.addEventListener('click', (e) => {
-        modal1.style.display = 'none'
-        modal2.style.display = 'flex'
-        retour.style.opacity = 1
-        retour.style.cursor = 'pointer'
-    })
-
-    retour.addEventListener('click', () => {
-        retourModal1()
-    })
-
-    closeModal.addEventListener("click", () => {
-        modal.close()
-        modal.style.display = 'none'
-        resteGeneral()
-        retourModal1()
-    })
 
     ajoutPhoto.addEventListener('change', function (event) {
         event.preventDefault()
@@ -165,9 +149,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             reader.onload = function () {
                 imgElement.src = reader.result
                 imgElement.className = 'image'
-                choixImage.style.display = 'none'
+                masquerElement(choixImage)
                 previewDiv.innerHTML = ''
-                previewDiv.style.display = 'flex'
+                afficherElement(previewDiv)
                 previewDiv.appendChild(imgElement)
 
                 checkFormAjouter(formAjout)
@@ -211,7 +195,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             resteInput()
             modal.close()
             retourModal1()
-            modal.style.display = 'none'
+            masquerElement(modal)
 
             const itemsGallery = await makeFetchRequest(urlWorks, curl)
             createGallery(itemsGallery, galleries.gallery)
