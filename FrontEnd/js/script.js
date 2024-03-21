@@ -14,7 +14,6 @@ const curl = {
         'accept': 'application/json',
     },
 }
-
 const galleries = {
     'gallery'      : qs('.gallery'),
     'galleryModal' : qs('.gallery-modal')
@@ -27,18 +26,17 @@ export { adminData, urlWorks, curl, galleries }
 
 document.addEventListener('DOMContentLoaded', async function () {
 
-    
-    const urlCategories = "http://localhost:5678/api/categories"
-
-
     const itemsGallery = await makeFetchRequest(urlWorks, curl)
+
+    const urlCategories = "http://localhost:5678/api/categories"
     const categories = await makeFetchRequest(urlCategories, curl)
 
-    const gallery = qs('.gallery')
-    const galleryModal = qs('.gallery-modal')
+    createGallery(itemsGallery, galleries.gallery)
+    createGallery(itemsGallery, galleries.galleryModal)
+
+    filterCategory(itemsGallery)
 
     createFilterButtons(categories)
-    filterCategory(itemsGallery)
     categoryModal(categories)
 
     const linkLog = createLinkLog()
@@ -72,6 +70,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const previewDiv = qs('#imagePreview')
     const choixImage = qs('#choixImage')
 
+
+    
     const restePreview = () => {
         ajoutPhoto.value = ''
         imgElement.src = ''
@@ -100,10 +100,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     resteGeneral()
 
+
+
     openModal.addEventListener("click", () => {
         modal.style.display = 'flex'
         modal.showModal()
-
         btnValider.disabled = true
     })
 
@@ -133,73 +134,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     })
 
 
-
-
-    // function createGallery(itemsGallery, container) {
-
-    //     while (container.firstChild) {
-    //         container.removeChild(container.firstChild);
-    //     }
-    
-    //     const fragment = document.createDocumentFragment()
-    
-    //     itemsGallery.forEach((item) => {
-    //         const figure = createElement('figure')
-    //         const img = createElement('img')
-    
-    //         figure.className = 'js-work'
-    
-    //         figure.setAttribute('data-index', item.id)
-    
-    //         img.src = item.imageUrl
-    
-    //         if (container.id === 'gallery') {
-    //             const figcaption = createElement('figcaption')
-    //             figcaption.innerHTML = item.title
-    //             figure.append(img, figcaption)
-    //         } else {
-    //             const icone = createElement('i')
-    //             icone.className = "fa-solid fa-trash-can fa-xs"
-    //             icone.setAttribute('data-index', item.id)
-    //             listenEvent(icone)
-    //             figure.append(img, icone)
-    //         }
-    
-    //         fragment.appendChild(figure)
-    //     })
-    
-    //     container.appendChild(fragment)  
-    // }
-
-    // function listenEvent(icone) {
-    //     icone.addEventListener('click', async (event) => {
-    //         const trashIcon = event.target.closest('.fa-trash-can')
-    
-    //         if (trashIcon) {
-    //             const id = trashIcon.getAttribute('data-index')
-    
-    //             const curlDelete = {
-    //                 method: 'DELETE',
-    //                 headers: {
-    //                     'accept': '*/*',
-    //                     'Authorization': `Bearer ${adminData.token}`
-    //                 },
-    //             }
-    //             const deleteImage = await makeFetchRequest(urlWorks + `/${id}`, curlDelete)
-    
-    //             if (deleteImage) {
-    //                 const itemsGallery = await makeFetchRequest(urlWorks, curl)
-    //                 createGallery(itemsGallery, gallery)
-    //                 createGallery(itemsGallery, galleryModal)
-    //             } else {
-    //                 console.log(deleteImage)
-    //             }
-    //         }
-    //     })
-    // }
-
-    createGallery(itemsGallery, gallery)
-    createGallery(itemsGallery, galleryModal)
 
     btnAjout.addEventListener('click', (e) => {
         modal1.style.display = 'none'
@@ -280,8 +214,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             modal.style.display = 'none'
 
             const itemsGallery = await makeFetchRequest(urlWorks, curl)
-            createGallery(itemsGallery, gallery)
-            createGallery(itemsGallery, galleryModal)
+            createGallery(itemsGallery, galleries.gallery)
+            createGallery(itemsGallery, galleries.galleryModal)
 
         } else {
             messageError('Echec lors de la connection au serveur')
