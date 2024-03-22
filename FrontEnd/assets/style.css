@@ -352,7 +352,8 @@ footer nav ul {
 }
 
 ::backdrop {
-	opacity: 0.9;
+	opacity: 0.3;
+	background-color: black;
 }
 
 .modal {
@@ -450,7 +451,7 @@ hr {
 	border: none;
 	width: 100%;
 	height: 1px;
-  	background-color: #B3B3B3;
+	background-color: #B3B3B3;
 	margin-top: 4px;
 	margin-bottom: 11px;
 }
@@ -477,7 +478,8 @@ hr {
 	width: 420px;
 	gap: 11.5px;
 }
-#ajouter hr{
+
+#ajouter hr {
 	margin: 1px 0;
 }
 
@@ -495,7 +497,7 @@ hr {
 }
 
 .fichier .fa-image {
-	color: #b3b3b344;
+	color: #B9C5CC;
 }
 
 .file-label {
@@ -503,7 +505,7 @@ hr {
 	height: 36px;
 	cursor: pointer;
 	border-radius: 25px;
-	background-color: #b3b3b344;
+	background-color: #CBD6DC;
 	text-align: center;
 	line-height: 36px;
 	color: #306685;
@@ -529,7 +531,7 @@ input[type="file"] {
 	/* border: 1px solid grey; */
 	margin-bottom: 12px;
 	outline: none;
-  	padding-left: 15px;
+	padding-left: 15px;
 }
 
 .custom-select {
@@ -558,7 +560,8 @@ input[type="file"] {
 	right: 30px;
 	/* transform: translateY(-50%); */
 	color: #6C6C6C;
-	pointer-events: none; /* permet aux clics de passer à travers */	
+	pointer-events: none;
+	/* permet aux clics de passer à travers */
 }
 
 .select {
@@ -599,8 +602,9 @@ input[type="file"] {
 }
 
 #btn-valide[disabled] {
-	background-color: grey;
-	opacity: 0.5;
+	/* background-color: #a7a7a7; */
+	background-color: black;
+	opacity: 0.4;
 	cursor: not-allowed;
 }
 

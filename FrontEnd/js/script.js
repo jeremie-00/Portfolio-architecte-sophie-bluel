@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const curlPost = {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${adminData.token}`,
+                'Authorization': `Bearer ${adminData?.token}`,
             },
             body: formData,
         }
