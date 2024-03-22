@@ -50,7 +50,7 @@ function listenEvent(icone) {
                 method: 'DELETE',
                 headers: {
                     'accept': '*/*',
-                    'Authorization': `Bearer ${adminData.token}`
+                    'Authorization': `Bearer ${adminData?.token}`
                 },
             }
             const deleteImage = await makeFetchRequest(urlWorks + `/${id}`, curlDelete)

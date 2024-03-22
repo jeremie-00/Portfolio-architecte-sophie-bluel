@@ -44,7 +44,6 @@ export function checkFormAjouter(formAjout) {
     return false
 }
 
-
 export function validFileType(file) {
     const fileTypes = ["image/jpg", "image/png"]
     for (var i = 0; i < fileTypes.length; i++) {

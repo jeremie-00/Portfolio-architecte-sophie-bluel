@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const containerError = qs('.js-error')
 
     const formAjout = qs('#ajouter')
-    const ajoutPhoto = qs('#file')
+    const btnAjoutPhoto = qs('#file')
     const titleInput = qs('#title')
     const categorySelect = qs('#category')
 
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
     const restePreview = () => {
-        ajoutPhoto.value = ''
+        btnAjoutPhoto.value = ''
         imgElement.src = ''
         afficherElement(choixImage)
         previewDiv.innerHTML = ''
@@ -92,14 +92,13 @@ document.addEventListener('DOMContentLoaded', async function () {
         containerError.innerHTML = message
     }
 
-    const resteGeneral = () => {
+    const resteGeneralModal = () => {
         restePreview()
         resteInput()
         resteMessageError()
     }
 
-    resteGeneral()
-
+    resteGeneralModal()
 
 
     openModal.addEventListener("click", () => {
@@ -119,8 +118,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         masquerElement(modal2)
         retour.style.opacity = 0
         retour.style.cursor = 'default'
-        restePreview()
-        resteInput()
+        resteGeneralModal()
     }
     retour.addEventListener('click', () => {
         retourModal1()
@@ -129,17 +127,16 @@ document.addEventListener('DOMContentLoaded', async function () {
     closeModal.addEventListener("click", () => {
         modal.close()
         masquerElement(modal)
-        resteGeneral()
+        resteGeneralModal()
         retourModal1()
     })
 
 
 
-    ajoutPhoto.addEventListener('change', function (event) {
+    btnAjoutPhoto.addEventListener('change', function (event) {
         event.preventDefault()
         event.stopPropagation()
         const file = event.target.files[0]
-
         if (file && validFileType(file) && validFileSize(file)) {
             // Lire le contenu du fichier
             const reader = new FileReader()
@@ -151,8 +148,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                 previewDiv.innerHTML = ''
                 afficherElement(previewDiv)
                 previewDiv.appendChild(imgElement)
-
-                btnValider.disabled = checkFormAjouter(formAjout)
             }
 
             reader.readAsDataURL(file)
@@ -168,11 +163,11 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     })
 
-    modal2.addEventListener('change', () => {
+    modal2.addEventListener('input', () => {
         btnValider.disabled = checkFormAjouter(formAjout)
     })
 
-    const submitHandler = async function (event) {
+    const envoiFormAjout = async function (event) {
         event.preventDefault()
 
         const formData = new FormData(this)
@@ -188,7 +183,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         const postImage = await makeFetchRequest(urlWorks, curlPost)
 
         if (postImage) {
-
             restePreview()
             resteInput()
             modal.close()
@@ -204,5 +198,5 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    formAjout.addEventListener('submit', submitHandler)
+    formAjout.addEventListener('submit', envoiFormAjout)
 })
