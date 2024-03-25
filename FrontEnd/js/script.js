@@ -1,7 +1,7 @@
 import { makeFetchRequest } from './modules/makeFetch.js';
 import { qs, qsa, createElement, loadStorage, removeStorage, masquerElement, afficherElement, loadAdminData,setMessageError } from './modules/domFunctions.js';
 import { createFilter, createBtnTous, checkDuplicate, filtrageGallery } from './modules/filtersManager.js';
-import { createItemGalleryPrincipal, createItemGalleryModal } from './modules/galleryManager.js';
+import { createGalleries, updateGalleries } from './modules/galleriesManager.js';
 import { validFileType, validFileSize, checkFormAjouter } from './modules/checkForm.js'
 
 const URLs = {
@@ -19,7 +19,6 @@ const curlGET = {
 
 export { URLs, curlGET }
 
-const galleryPrincipal = qs('.gallery')
 
 document.addEventListener('DOMContentLoaded', async function () {
 
@@ -30,14 +29,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
         return false
     }
-    //Gallery principal
-    const works = await makeFetchRequest(URLs.urlWorks, curlGET)
 
-    if (works instanceof Error) {
-        alert(works)
-    } else {
-        works.forEach(work => galleryPrincipal.appendChild(createItemGalleryPrincipal(work)))
-    }
+    //Galleries principal et modal
+    createGalleries()
 
     //Bouton de filtre
     const categories = await makeFetchRequest(URLs.urlCategories, curlGET)
@@ -121,9 +115,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         modal1.showModal()
     })
 
-    //creation gallery modal
-    const galleryModal = qs('#gallery-modal')
-    works.forEach(work => galleryModal.appendChild(createItemGalleryModal(work)))
+
 
     //creation categorie selecte modal
     const selectCategory = qs('#category')
@@ -181,8 +173,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (postImage instanceof Error) {
             alert(postImage)
         } else {
-            galleryPrincipal.appendChild(createItemGalleryPrincipal(postImage))
-            galleryModal.appendChild(createItemGalleryModal(postImage))
+            updateGalleries(postImage)
             modal2.close()
         }
     }
@@ -194,8 +185,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     })
 
     //mise en page normal ou admin
-    const banner = qs('.banner')
+    
     function gestionAffichagePage() {
+        const banner = qs('.banner')
+        const log = qs('ul li:nth-child(3)')
+        const allBtnsFilter = qsa('.filter')
+        const openModal1 = qs('#open-modal-1')
         if (isAdmin()) {
             banner.style.height = '59px'
             log.innerHTML = 'logout'

@@ -1,7 +1,7 @@
 
-import { qsa, createElement, loadAdminData } from './domFunctions.js';
+import { qs, qsa, createElement, loadAdminData } from './domFunctions.js';
 import { makeFetchRequest } from './makeFetch.js';
-import { URLs } from '../script.js'
+import { URLs, curlGET } from '../script.js'
 
 export function createItemGalleryPrincipal(work) {
     const fragment = document.createDocumentFragment()
@@ -59,4 +59,24 @@ async function deleteWork(event) {
             }
         })
     }
+}
+
+
+const galleryPrincipal = qs('.gallery')
+const galleryModal = qs('#gallery-modal')
+
+export async function createGalleries() {
+    const works = await makeFetchRequest(URLs.urlWorks, curlGET)
+
+    if (works instanceof Error) {
+        alert(works)
+    } else {
+        works.forEach(work => galleryPrincipal.appendChild(createItemGalleryPrincipal(work)))
+        works.forEach(work => galleryModal.appendChild(createItemGalleryModal(work)))
+    }
+}
+
+export function updateGalleries(postImage) {
+    galleryPrincipal.appendChild(createItemGalleryPrincipal(postImage))
+    galleryModal.appendChild(createItemGalleryModal(postImage))
 }
