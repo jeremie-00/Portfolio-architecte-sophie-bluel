@@ -36,7 +36,7 @@ export function checkFormAjouter(formAjout) {
     for (let i = 0; i < formAjout.length; i++) {
         const element = formAjout[i]
         if (element.type !== "submit") {
-            if (!element.value) {
+            if (!element.value || element.value.trim() === '') {
                 return true
             }
         }
