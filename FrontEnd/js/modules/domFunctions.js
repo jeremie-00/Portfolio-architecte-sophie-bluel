@@ -12,12 +12,17 @@ export function loadStorage(key){
     return localStorage.getItem(key) 
 }
 
+export function loadAdminData(key) {
+    const admin = loadStorage(key)
+    const adminData = JSON.parse(admin)
+    return JSON.parse(admin)
+}
+
 export function masquerElement(element) {
     element.style.display = 'none'
 }
-
-export function afficherElement (element) {
-    element.style.display = 'flex'
+export function afficherElement(element) {
+    element.style.display = 'block'
 }
 
 
