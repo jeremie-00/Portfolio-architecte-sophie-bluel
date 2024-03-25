@@ -27,21 +27,20 @@ export const checkDuplicate = (array) => {
     return itemsObjects
 }
 
-function resteColorButton() {
+function colorButton(event) {
     const allBtns = qsa('.filter')
     allBtns.forEach((btn) => {
         btn.classList.remove('selected')
     })
+    event.target.classList.add('selected')
 }
 
 export function filtrageGallery(event) {
-    resteColorButton()
+    colorButton(event)
     const btn = event.target
-    btn.classList.add('selected')
     const categoryId = btn.dataset.categoryId
     const allWorks = qsa('.work')
-    const allWorksArray = Array.from(allWorks)
-    allWorksArray.forEach(work => {
+    allWorks.forEach(work => {
         if (categoryId !== "0" && work.dataset.categoryId !== categoryId) {
             masquerElement(work)
         } else {
