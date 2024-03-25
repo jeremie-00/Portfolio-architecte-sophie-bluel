@@ -1,13 +1,13 @@
 import { qs, qsa, createElement, masquerElement, afficherElement } from './domFunctions.js';
 
-export function createFilter(category) { 
+export function createFilter(category) {
     const btn = createElement('button')
     btn.className = 'filter'
     btn.innerHTML = category.name
     btn.setAttribute('data-category-id', category.id)
     btn.type = 'submit'
     return btn
-} 
+}
 
 export const createBtnTous = () => {
     const containerFilter = qs('.container-filter')
@@ -39,14 +39,14 @@ export function filtrageGallery(event) {
     const btn = event.target
     btn.classList.add('selected')
     const categoryId = btn.dataset.categoryId
-    const containerWorks = qsa('.work')
-    const containerWorksArray = Array.from(containerWorks)
-    containerWorksArray.forEach(work => {
+    const allWorks = qsa('.work')
+    const allWorksArray = Array.from(allWorks)
+    allWorksArray.forEach(work => {
         if (categoryId !== "0" && work.dataset.categoryId !== categoryId) {
             masquerElement(work)
-        }else{
+        } else {
             afficherElement(work)
         }
-        
+
     })
 }

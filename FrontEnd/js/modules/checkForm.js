@@ -9,11 +9,6 @@ export function isPasswordValid(password) {
         return false
     }
 
-    // const specialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/
-    // if (!specialCharacters.test(password)) {
-    //     return false
-    // }
-
     const numbers = /\d/
     if (!numbers.test(password)) {
         return false

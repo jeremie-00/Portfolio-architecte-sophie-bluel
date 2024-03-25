@@ -37,7 +37,7 @@ export function createItemGalleryModal(work) {
 async function deleteWork(event) {
     const id = event.target.getAttribute('data-id')
     const adminData = loadAdminData('admin')
-    const allContainerWokrs = qsa('.work')
+    const allWorks = qsa('.work')
 
     const curlDelete = {
         method: 'DELETE',
@@ -49,11 +49,10 @@ async function deleteWork(event) {
 
     const deleteImage = await makeFetchRequest(URLs.urlWorks + `/${id}`, curlDelete)
 
-    //const deleteImage = true
     if (deleteImage instanceof Error) {
         alert(deleteImage)
     } else {
-        allContainerWokrs.forEach(work => {
+        allWorks.forEach(work => {
             if (work.getAttribute('data-id') === id) {
                 const parentFigure = work.closest('figure')
                 parentFigure.remove()

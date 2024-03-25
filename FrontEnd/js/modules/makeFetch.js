@@ -8,7 +8,7 @@ export async function makeFetchRequest(url, curl) {
                 return response.json()
             }
         } else {
-            throw new Error(response.status + ' ' + response.statusText)   
+            throw new Error(response.status + ' ' + response.statusText)
         }
     } catch (error) {
         return error

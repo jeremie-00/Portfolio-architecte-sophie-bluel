@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     } else {
         works.forEach(work => galleryPrincipal.appendChild(createItemGalleryPrincipal(work)))
     }
-    
+
     //Bouton de filtre
     const categories = await makeFetchRequest(URLs.urlCategories, curlGET)
     const containerFilter = qs('.container-filter')
@@ -90,9 +90,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     const wrapper = qs('.wrapper')
 
     //fermeture modal si on click en dehors
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         if (event.target.open) {
-            modal1.close() 
+            modal1.close()
             modal2.close()
         }
     })
@@ -107,13 +107,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     //gestion de la modal (open, close)
-    openModal1.addEventListener('click', () => { 
+    openModal1.addEventListener('click', () => {
         resetFormModal()
         modal1.showModal()
     })
 
-    allCloseModal.forEach(close => close.addEventListener('click', () => { 
-        modal1.close() 
+    allCloseModal.forEach(close => close.addEventListener('click', () => {
+        modal1.close()
         modal2.close()
     }))
 
@@ -122,10 +122,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     const modal2 = qs('#modal2')
     const retour = qs('.modal-retour')
 
-    openModal2.addEventListener('click', () => { 
+    openModal2.addEventListener('click', () => {
         modal1.close()
         modal2.showModal()
-        btnValider.disabled = true 
+        btnValider.disabled = true
     })
     retour.addEventListener('click', () => {
         resetFormModal()
@@ -138,8 +138,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     works.forEach(work => galleryModal.appendChild(createItemGalleryModal(work)))
 
     //creation categorie selecte modal
-    const selectCategory = qs('#category') 
-    const categoryModal = (categories) => {  
+    const selectCategory = qs('#category')
+    const categoryModal = (categories) => {
         categories.forEach(category => {
             const option = createElement('option')
             option.text = `${category.name}`
@@ -148,9 +148,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         })
     }
     categoryModal(categories)
-    //suppression
-    //const allBtnsDelete = qsa('.fa-trash-can')
-    //allBtnsDelete.forEach(btn => btn.addEventListener('click', deleteWork))
 
     //ajouter photo
     const btnAjoutPhoto = qs('#file')
@@ -169,7 +166,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
             reader.readAsDataURL(file)
         } else {
-            //restePreview()
             const fileSizeInMegabytes = file.size / (1024 * 1024)
             if (!validFileSize(file)) {
                 messageError(`Taille de fichier max 4mo / ${fileSizeInMegabytes.toFixed(2)}mo`)
@@ -185,11 +181,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         event.preventDefault()
         btnValider.disabled = true
         const formData = new FormData(this)
-
-        console.log(formData)
-
         const adminData = loadAdminData('admin')
-
         const curlPOST = {
             method: 'POST',
             headers: {
@@ -200,7 +192,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const postImage = await makeFetchRequest(URLs.urlWorks, curlPOST)
         if (postImage instanceof Error) {
             alert(postImage)
-        }else{
+        } else {
             galleryPrincipal.appendChild(createItemGalleryPrincipal(postImage))
             galleryModal.appendChild(createItemGalleryModal(postImage))
             modal2.close()
@@ -220,16 +212,16 @@ document.addEventListener('DOMContentLoaded', async function () {
             banner.style.height = '59px'
             log.innerHTML = 'logout'
             afficherElement(openModal1)
-            allBtnsFilter.forEach((btn) => { 
-                 masquerElement(btn)
+            allBtnsFilter.forEach((btn) => {
+                masquerElement(btn)
             })
         } else {
             banner.style.height = '0'
             log.innerHTML = 'login'
             masquerElement(openModal1)
-            allBtnsFilter.forEach((btn) => { 
+            allBtnsFilter.forEach((btn) => {
                 afficherElement(btn)
-           })
+            })
         }
     }
     gestionAffichagePage()
