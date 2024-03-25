@@ -27,4 +27,7 @@ export function afficherElement(element) {
     element.style.display = 'block'
 }
 
-
+export const setMessageError = (message) => {
+    const containerError = qs('.message-error')
+    containerError.innerHTML = message
+}

@@ -1,5 +1,5 @@
 import { makeFetchRequest } from './modules/makeFetch.js';
-import { qs, qsa, createElement, loadStorage, removeStorage, masquerElement, afficherElement, loadAdminData } from './modules/domFunctions.js';
+import { qs, qsa, createElement, loadStorage, removeStorage, masquerElement, afficherElement, loadAdminData,setMessageError } from './modules/domFunctions.js';
 import { createFilter, createBtnTous, checkDuplicate, filtrageGallery } from './modules/filtersManager.js';
 import { createItemGalleryPrincipal, createItemGalleryModal } from './modules/galleryManager.js';
 import { validFileType, validFileSize, checkFormAjouter } from './modules/checkForm.js'
@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     //Bouton login
     const log = qs('ul li:nth-child(3)')
-
     log.addEventListener('click', () => {
         if (isAdmin()) {
             removeStorage('admin')
@@ -74,20 +73,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     const previewImage = qs('#imagePreview img')
     const choixImage = qs('#choixImage')
 
-    //message erreur 
-    const containerError = qs('.message-error')
-    const resteMessageError = () => containerError.innerHTML = ''
-
-    const messageError = (message) => {
-        resteMessageError()
-        containerError.innerHTML = message
-    }
-
     //bouton modifier, ouverture et fermeture modal
     const openModal1 = qs('#open-modal-1')
     const allCloseModal = qsa('.modal-close')
     const modal1 = qs('#modal1')
-    const wrapper = qs('.wrapper')
+    //const wrapper = qs('.wrapper')
 
     //fermeture modal si on click en dehors
     document.addEventListener('click', function (event) {
@@ -99,8 +89,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     //reset formulaire modal
     function resetFormModal() {
-        selectCategory.value = ''
-        previewImage.src = ''
         choixImage.style.display = 'flex'
         masquerElement(preview)
         formAjout.reset()
@@ -168,9 +156,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         } else {
             const fileSizeInMegabytes = file.size / (1024 * 1024)
             if (!validFileSize(file)) {
-                messageError(`Taille de fichier max 4mo / ${fileSizeInMegabytes.toFixed(2)}mo`)
+                setMessageError(`Taille de fichier max 4mo / ${fileSizeInMegabytes.toFixed(2)}mo`)
             } else if (!validFileType(file)) {
-                messageError(`Type de fichier accepter jpg, png / ${file.type.split('/')[1]}`)
+                setMessageError(`Type de fichier accepter jpg, png / ${file.type.split('/')[1]}`)
             }
         }
     })

@@ -54,8 +54,8 @@ async function deleteWork(event) {
     } else {
         allWorks.forEach(work => {
             if (work.getAttribute('data-id') === id) {
-                const parentFigure = work.closest('figure')
-                parentFigure.remove()
+                const parentWork = work.closest('figure')
+                parentWork.remove()
             }
         })
     }
