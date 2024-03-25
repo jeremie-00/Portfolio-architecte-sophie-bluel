@@ -1,9 +1,8 @@
 import { makeFetchRequest } from './modules/makeFetch.js';
-import { qs, saveStorage } from './modules/domFunctions.js';
+import { qs, saveStorage, setMessageError } from './modules/domFunctions.js';
 import { isEmailValid, isPasswordValid } from './modules/checkForm.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
-
     //lien login style 
     const link = qs('ul li:nth-child(3)')
     link.style.fontWeight = 'bold'
@@ -15,15 +14,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     })
     const formLogin = qs('#js-form-login')
 
-    formLogin.addEventListener('submit', async (event) => {
+    formLogin.addEventListener('submit', async function (event) {
         event.preventDefault()
         const email = formLogin.elements.email.value
         const password = formLogin.elements.password.value
-
-        const containerError = qs('.message-error')
-
         if (isEmailValid(email) && isPasswordValid(password)) {
-            containerError.innerHTML = ''
             const login = {
                 "email": email,
                 "password": password
@@ -37,28 +32,27 @@ document.addEventListener('DOMContentLoaded', async function () {
                 },
                 body: JSON.stringify(login),
             }
+
             const responseLogin = await makeFetchRequest(urlLogin, curl)
 
             if (responseLogin instanceof Error) {
                 if (responseLogin.message === '401 Unauthorized' || responseLogin.message === '404 Not Found') {
-                    containerError.innerHTML = 'Email ou Mot de passe invalide.'
+                    setMessageError('Email ou Mot de passe invalide.')
                 } else {
-                    containerError.innerHTML = 'Une erreur s\'est produite lors de la connexion.'
+                    setMessageError('Une erreur s\'est produite lors de la connexion.')
                 }
             } else {
                 const adminData = {
                     'userId': responseLogin.userId,
                     'token': responseLogin.token,
                 }
-
                 const adminDataJSON = JSON.stringify(adminData)
                 saveStorage('admin', adminDataJSON)
-
                 window.location.href = './../index.html'
             }
 
         } else {
-            containerError.innerHTML = 'Format d\'e-mail ou de mot de passe invalide.'
+            setMessageError('Format d\'e-mail ou de mot de passe invalide.')
         }
     })
 
