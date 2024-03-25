@@ -61,7 +61,6 @@ async function deleteWork(event) {
     }
 }
 
-
 const galleryPrincipal = qs('.gallery')
 const galleryModal = qs('#gallery-modal')
 

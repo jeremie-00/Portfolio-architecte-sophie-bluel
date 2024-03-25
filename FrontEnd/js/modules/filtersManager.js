@@ -52,3 +52,15 @@ export function filtrageGallery(event) {
 
     })
 }
+
+export function createAllFilters(categories) {
+    const containerFilter = qs('.container-filter')
+
+    if (categories instanceof Error) {
+        alert(categories)
+    } else {
+        createBtnTous()
+        const categoriesTrier = checkDuplicate(categories)
+        categoriesTrier.forEach(category => containerFilter.appendChild(createFilter(category)))
+    }
+}
