@@ -20,11 +20,14 @@ export const createBtnTous = () => {
 }
 
 export const checkDuplicate = (array) => {
-    const itemsNames = new Set(array.map(obj => obj.name))
-    const itemsObjects = Array.from(itemsNames).map(name => {
-        return array.find(obj => obj.name === name)
+    const uniqueNames = new Set()
+    return array.filter(obj => {
+        if (!uniqueNames.has(obj.name)) {
+            uniqueNames.add(obj.name)
+            return true
+        }
+        return false
     })
-    return itemsObjects
 }
 
 function colorButton(event) {
