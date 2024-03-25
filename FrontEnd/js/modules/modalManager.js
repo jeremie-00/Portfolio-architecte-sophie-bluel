@@ -1,4 +1,4 @@
-import { qs, qsa, createElement, masquerElement, afficherElement} from './domFunctions.js';
+import { qs, qsa, createElement, masquerElement, afficherElement } from './domFunctions.js';
 
 export function navigationModal() {
     //bouton modifier, ouverture et fermeture modal
@@ -11,16 +11,8 @@ export function navigationModal() {
     const openModal2 = qs('#open-modal-2')
     const retour = qs('.modal-retour')
 
-    const formAjout = qs('#ajouter')
-    const preview = qs('#imagePreview')
-
     const btnValider = qs('#btn-valide')
-    //reset formulaire modal
-    function resetFormModal() {
-        choixImage.style.display = 'flex'
-        masquerElement(preview)
-        formAjout.reset()
-    }
+
     openModal1.addEventListener('click', () => {
         resetFormModal()
         modal1.showModal()
@@ -50,7 +42,15 @@ export function navigationModal() {
         }
     })
 }
-
+//reset formulaire modal
+function resetFormModal() {
+    const choixImage = qs('#choixImage')
+    const formAjout = qs('#ajouter')
+    const preview = qs('#imagePreview')
+    choixImage.style.display = 'flex'
+    masquerElement(preview)
+    formAjout.reset()
+}
 export const categoryModal = (categories) => {
     const selectCategory = qs('#category')
     categories.forEach(category => {
