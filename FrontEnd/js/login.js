@@ -1,6 +1,7 @@
 import { makeFetchRequest } from './modules/makeFetch.js';
 import { qs, saveStorage, setMessageError } from './modules/domFunctions.js';
 import { isEmailValid, isPasswordValid } from './modules/checkForm.js';
+import { URLs } from './modules/variables.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
     //lien login style 
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 "email": email,
                 "password": password
             }
-            const urlLogin = "http://localhost:5678/api/users/login"
+            
             const curl = {
                 method: 'POST',
                 headers: {
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 body: JSON.stringify(login),
             }
 
-            const responseLogin = await makeFetchRequest(urlLogin, curl)
+            const responseLogin = await makeFetchRequest(URLs.urlLogin, curl)
 
             if (responseLogin instanceof Error) {
                 if (responseLogin.message === '401 Unauthorized' || responseLogin.message === '404 Not Found') {

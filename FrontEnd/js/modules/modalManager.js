@@ -1,5 +1,15 @@
 import { qs, qsa, createElement, masquerElement, afficherElement } from './domFunctions.js';
 
+//reset formulaire modal
+function resetFormModal() {
+    const choixImage = qs('#choixImage')
+    const formAjout = qs('#ajouter')
+    const preview = qs('#imagePreview')
+    choixImage.style.display = 'flex'
+    masquerElement(preview)
+    formAjout.reset()
+}
+
 export function navigationModal() {
     //bouton modifier, ouverture et fermeture modal
     const openModal1 = qs('#open-modal-1')
@@ -42,15 +52,7 @@ export function navigationModal() {
         }
     })
 }
-//reset formulaire modal
-function resetFormModal() {
-    const choixImage = qs('#choixImage')
-    const formAjout = qs('#ajouter')
-    const preview = qs('#imagePreview')
-    choixImage.style.display = 'flex'
-    masquerElement(preview)
-    formAjout.reset()
-}
+
 export const categoryModal = (categories) => {
     const selectCategory = qs('#category')
     categories.forEach(category => {

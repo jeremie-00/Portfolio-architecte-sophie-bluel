@@ -1,6 +1,6 @@
 import { qs, qsa, createElement, loadAdminData } from './domFunctions.js';
 import { makeFetchRequest } from './makeFetch.js';
-import { URLs, curlGET } from '../script.js';
+import { URLs, curlGET } from './variables.js';
 
 function createItemGalleryPrincipal(work) {
     const fragment = document.createDocumentFragment()

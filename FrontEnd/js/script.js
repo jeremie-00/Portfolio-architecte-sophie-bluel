@@ -4,22 +4,7 @@ import { createAllFilters, filtrageGallery } from './modules/filtersManager.js';
 import { createGalleries, updateGalleries } from './modules/galleriesManager.js';
 import { validFileType, validFileSize, checkFormAjouter } from './modules/checkForm.js'
 import { navigationModal, categoryModal, affichagePhoto } from './modules/modalManager.js'
-
-const URLs = {
-    'urlWorks': 'http://localhost:5678/api/works',
-    'urlCategories': 'http://localhost:5678/api/categories',
-    'urlLogin': 'http://localhost:5678/api/users/login',
-}
-
-const curlGET = {
-    method: 'GET',
-    headers: {
-        'accept': 'application/json',
-    },
-}
-
-export { URLs, curlGET }
-
+import { URLs, curlGET } from './modules/variables.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
     //Galleries principal et modal
