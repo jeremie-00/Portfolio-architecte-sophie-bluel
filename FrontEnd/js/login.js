@@ -1,11 +1,11 @@
 import { makeFetchRequest } from './modules/makeFetch.js';
-import { qs, qsa, createElement, saveStorage, removeStorage, loadStorage } from './modules/domFunctions.js';
-import { createLinkLog } from './modules/logManager.js';
+import { qs, saveStorage } from './modules/domFunctions.js';
+//import { createLinkLog } from './modules/logManager.js';
 import { isEmailValid, isPasswordValid } from './modules/checkForm.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
     //lien login style 
-    const link = createLinkLog()
+    const link = qs('ul li:nth-child(3)')
     link.style.fontWeight = 'bold'
     link.style.cursor = 'default'
     link.style.setProperty('color', 'initial')
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const email = formLogin.elements.email.value
         const password = formLogin.elements.password.value
 
-        const containerError = qs('.js-error')
+        const containerError = qs('.message-error')
 
         if (isEmailValid(email) && isPasswordValid(password)) {
             containerError.innerHTML = ''
