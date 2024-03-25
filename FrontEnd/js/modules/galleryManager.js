@@ -1,69 +1,63 @@
-import { qs, qsa, createElement } from './domFunctions.js';
+
+import { qsa, createElement, loadAdminData } from './domFunctions.js';
 import { makeFetchRequest } from './makeFetch.js';
+import { URLs } from '../script.js'
 
-import { adminData, urlWorks, curl, galleries } from '../script.js';
-
-export function createGallery(itemsGallery, container) {
-
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-
+export function createItemGalleryPrincipal(work) {
     const fragment = document.createDocumentFragment()
+    const figure = createElement('figure')
+    const img = createElement('img')
+    const figcaption = createElement('figcaption')
+    figure.className = 'work'
+    figure.setAttribute('data-id', work.id)
+    figure.setAttribute('data-category-id', work.categoryId)
+    img.src = work.imageUrl
+    figcaption.innerHTML = work.title
+    figure.append(img, figcaption)
+    fragment.appendChild(figure)
+    return fragment
+}
 
-    itemsGallery.forEach((item) => {
-        const figure = createElement('figure')
-        const img = createElement('img')
-
-        figure.className = 'js-work'
-
-        figure.setAttribute('data-index', item.id)
-
-        img.src = item.imageUrl
-
-        if (container.id === 'gallery') {
-            const figcaption = createElement('figcaption')
-            figcaption.innerHTML = item.title
-            figure.append(img, figcaption)
-        } else {
-            const icone = createElement('i')
-            icone.className = "fa-solid fa-trash-can fa-xs"
-            icone.setAttribute('data-index', item.id)
-
-            icone.addEventListener('click', deleteWork)
-            
-            figure.append(img, icone)
-        }
-
-        fragment.appendChild(figure)
-    })
-
-    container.appendChild(fragment)
+export function createItemGalleryModal(work) {
+    const fragment = document.createDocumentFragment()
+    const figure = createElement('figure')
+    const img = createElement('img')
+    const icone = createElement('i')
+    figure.className = 'work'
+    icone.className = "fa-solid fa-trash-can fa-xs"
+    figure.setAttribute('data-id', work.id)
+    icone.setAttribute('data-id', work.id)
+    img.src = work.imageUrl
+    figure.append(img, icone)
+    fragment.appendChild(figure)
+    icone.addEventListener('click', deleteWork)
+    return fragment
 }
 
 async function deleteWork(event) {
+    const id = event.target.getAttribute('data-id')
+    const adminData = loadAdminData('admin')
+    const allContainerWokrs = qsa('.work')
 
-    const trashIcon = event.target.closest('.fa-trash-can')
-
-    if (trashIcon) {
-        const id = trashIcon.getAttribute('data-index')
-
-        const curlDelete = {
-            method: 'DELETE',
-            headers: {
-                'accept': '*/*',
-                'Authorization': `Bearer ${adminData?.token}`
-            },
-        }
-        const deleteImage = await makeFetchRequest(urlWorks + `/${id}`, curlDelete)
-
-        if (deleteImage) {
-            const itemsGallery = await makeFetchRequest(urlWorks, curl)
-            createGallery(itemsGallery, galleries.gallery)
-            createGallery(itemsGallery, galleries.galleryModal)
-        } else {
-            console.log(deleteImage)
-        }
+    const curlDelete = {
+        method: 'DELETE',
+        headers: {
+            'accept': '*/*',
+            'Authorization': `Bearer ${adminData.token}`
+        },
     }
 
+    const deleteImage = await makeFetchRequest(URLs.urlWorks + `/${id}`, curlDelete)
+
+    //const deleteImage = true
+    if (deleteImage instanceof Error) {
+        alert(deleteImage)
+    } else {
+        allContainerWokrs.forEach(work => {
+            if (work.getAttribute('data-id') === id) {
+                const parentFigure = work.closest('figure')
+                parentFigure.remove()
+            }
+        })
+    }
 }
