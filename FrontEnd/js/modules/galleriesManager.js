@@ -1,9 +1,8 @@
-
 import { qs, qsa, createElement, loadAdminData } from './domFunctions.js';
 import { makeFetchRequest } from './makeFetch.js';
-import { URLs, curlGET } from '../script.js'
+import { URLs, curlGET } from '../script.js';
 
-export function createItemGalleryPrincipal(work) {
+function createItemGalleryPrincipal(work) {
     const fragment = document.createDocumentFragment()
     const figure = createElement('figure')
     const img = createElement('img')
@@ -18,7 +17,7 @@ export function createItemGalleryPrincipal(work) {
     return fragment
 }
 
-export function createItemGalleryModal(work) {
+function createItemGalleryModal(work) {
     const fragment = document.createDocumentFragment()
     const figure = createElement('figure')
     const img = createElement('img')

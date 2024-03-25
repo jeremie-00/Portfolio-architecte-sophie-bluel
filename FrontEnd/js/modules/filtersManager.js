@@ -1,6 +1,6 @@
 import { qs, qsa, createElement, masquerElement, afficherElement } from './domFunctions.js';
 
-export function createFilter(category) {
+function createFilter(category) {
     const btn = createElement('button')
     btn.className = 'filter'
     btn.innerHTML = category.name
@@ -9,7 +9,7 @@ export function createFilter(category) {
     return btn
 }
 
-export const createBtnTous = () => {
+const createBtnTous = () => {
     const containerFilter = qs('.container-filter')
     const btnDefault = createElement('button')
     btnDefault.innerHTML = "Tous"
@@ -19,7 +19,7 @@ export const createBtnTous = () => {
     containerFilter.appendChild(btnDefault)
 }
 
-export const checkDuplicate = (array) => {
+const checkDuplicate = (array) => {
     const uniqueNames = new Set()
     return array.filter(obj => {
         if (!uniqueNames.has(obj.name)) {
