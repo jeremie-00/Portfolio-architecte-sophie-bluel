@@ -29,39 +29,41 @@ export function createGallery(itemsGallery, container) {
             const icone = createElement('i')
             icone.className = "fa-solid fa-trash-can fa-xs"
             icone.setAttribute('data-index', item.id)
-            listenEvent(icone)
+
+            icone.addEventListener('click', deleteWork)
+            
             figure.append(img, icone)
         }
 
         fragment.appendChild(figure)
     })
 
-    container.appendChild(fragment)  
+    container.appendChild(fragment)
 }
 
-function listenEvent(icone) {
-    icone.addEventListener('click', async (event) => {
-        const trashIcon = event.target.closest('.fa-trash-can')
+async function deleteWork(event) {
 
-        if (trashIcon) {
-            const id = trashIcon.getAttribute('data-index')
+    const trashIcon = event.target.closest('.fa-trash-can')
 
-            const curlDelete = {
-                method: 'DELETE',
-                headers: {
-                    'accept': '*/*',
-                    'Authorization': `Bearer ${adminData?.token}`
-                },
-            }
-            const deleteImage = await makeFetchRequest(urlWorks + `/${id}`, curlDelete)
+    if (trashIcon) {
+        const id = trashIcon.getAttribute('data-index')
 
-            if (deleteImage) {
-                const itemsGallery = await makeFetchRequest(urlWorks, curl)
-                createGallery(itemsGallery, galleries.gallery)
-                createGallery(itemsGallery, galleries.galleryModal)
-            } else {
-                console.log(deleteImage)
-            }
+        const curlDelete = {
+            method: 'DELETE',
+            headers: {
+                'accept': '*/*',
+                'Authorization': `Bearer ${adminData?.token}`
+            },
         }
-    })
+        const deleteImage = await makeFetchRequest(urlWorks + `/${id}`, curlDelete)
+
+        if (deleteImage) {
+            const itemsGallery = await makeFetchRequest(urlWorks, curl)
+            createGallery(itemsGallery, galleries.gallery)
+            createGallery(itemsGallery, galleries.galleryModal)
+        } else {
+            console.log(deleteImage)
+        }
+    }
+
 }

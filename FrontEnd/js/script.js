@@ -102,8 +102,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
     openModal.addEventListener("click", () => {
-        afficherElement(modal)
         modal.showModal()
+        retour.style.opacity = 0
+        retour.style.cursor = 'default'
     })
 
     btnAjout.addEventListener('click', () => {
@@ -126,7 +127,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     closeModal.addEventListener("click", () => {
         modal.close()
-        masquerElement(modal)
         resteGeneralModal()
         retourModal1()
     })
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             resteInput()
             modal.close()
             retourModal1()
-            masquerElement(modal)
+            //masquerElement(modal)
 
             const itemsGallery = await makeFetchRequest(urlWorks, curl)
             createGallery(itemsGallery, galleries.gallery)

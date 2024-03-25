@@ -48,8 +48,15 @@
 			</article>
 		</section>
 		<section id="portfolio">
-			<h2>Mes Projets</h2>
-			<div id="gallery" class="gallery">
+			<div class="title-container">
+				<h2>Mes Projets</h2>
+				<div id="open-modal-1"><i class="fa-regular fa-pen-to-square"></i> modifier</div>
+			</div>
+			<div class="container-filter">
+
+			</div>
+			<div class="gallery">
+
 			</div>
 		</section>
 		<section id="contact">
@@ -74,50 +81,63 @@
 			</ul>
 		</nav>
 	</footer>
-	<dialog class="modal">
-		<div class="btn-modal">
-			<button type="submit" class="modal-retour"><i class="fa-solid fa-arrow-left fa-xl"></i></button>
-			<button type="submit" class="modal-close"><i class="fa-solid fa-xmark fa-xl"></i></button>
-		</div>
-		<div class="content-modal-1">
-			<h2 id="title-modal-1" class="title-modal">Galerie photo</h2>
-			<div class="wrap-gallery-modal">
-				<div id="gallery-modal" class="gallery gallery-modal">
-				</div>
-			</div>
-			<hr />
-			<input id="btn-ajout" type="submit" value="Ajouter une photo">
-		</div>
 
-		<div class="content-modal-2">
-			<h2 id="title-modal-2" class="title-modal">Ajouter photo</h2>
-			<div class="js-error message-error"></div>
-			<form id="ajouter">
-				<div class="fichier">
-					<div id="imagePreview"></div>
-					<div id="choixImage">
-						<i class="fa-regular fa-image fa-5x"></i>
-						<label for="file" class="file-label">
-							+ Ajouter photo
-							<input type="file" id="file" name="image" accept=".png, .jpg" enctype="multipart/form-data">
-						</label>
-						<span class="subtitle-fichier">jpg, png : 4mo max</span>
-					</div>
-				</div>
-				<label for="title">Titre</label>
-				<input id="title" type="text" name="title">
-				<label for="category">Catégorie</label>
-				<div class="custom-select select-selected">
-					<i class="fa-solid fa-angle-down"></i>
-					<select id="category" class="select" name="category"></select>
-				</div>
+	<dialog id="modal1" class="modal">
+		<section class="wrapper">
+			<header class="header-modal-1">
+				<button type="submit" class="modal-close"><i class="fa-solid fa-xmark fa-xl"></i></button>
+				<h2 id="title-modal-1" class="title-modal">Galerie photo</h2>
+			</header>
+			<article class="content-modal">
+				<section class="wrap-gallery-modal">
+					<div id="gallery-modal" class="gallery gallery-modal"></div>
+				</section>
 				<hr />
-				<input id="btn-valide" type="submit" value="Valider">
-			</form>
+				<input id="open-modal-2" type="submit" value="Ajouter une photo">
+			</article>
+		</section>
+	</dialog>
 
-		</div>
 
+	<dialog id="modal2" class="modal">
+		<section class="wrapper">
+			<header class="header-modal-2">
+				<button type="submit" id="nav-modal2" class="modal-retour"><i
+						class="fa-solid fa-arrow-left fa-xl"></i></button>
+				<button type="submit" class="modal-close"><i class="fa-solid fa-xmark fa-xl"></i></button>
 
+			</header>
+			<article class="content-modal">
+				<h2 id="title-modal-2" class="title-modal">Ajout photo</h2>
+				<div class="message-error"></div>
+				<form id="ajouter">
+					<div class="fichier">
+						<div id="imagePreview"><img></div>
+						<div id="choixImage">
+							<i class="fa-regular fa-image fa-5x"></i>
+							<label for="file" class="file-label">
+								+ Ajouter photo
+								<input type="file" id="file" name="image" accept=".png, .jpg"
+									enctype="multipart/form-data">
+							</label>
+							<span class="subtitle-fichier">jpg, png : 4mo max</span>
+						</div>
+					</div>
+					<label for="title">Titre</label>
+					<input id="title" type="text" name="title">
+					<label for="category" class="margin-bottom-10">Catégorie</label>
+					<div class="custom-select select-selected">
+						<i class="fa-solid fa-angle-down"></i>
+						<select id="category" class="select" name="category">
+							<option value="" selected disabled></option>
+						</select>
+					</div>
+					<hr />
+					<input id="btn-valide" type="submit" value="Valider">
+				</form>
+
+			</article>
+		</section>
 	</dialog>
 	<script type="module" src="/js/script.js"></script>
 </body>
