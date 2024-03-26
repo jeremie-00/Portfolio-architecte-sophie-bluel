@@ -69,8 +69,11 @@ export async function createGalleries() {
     if (works instanceof Error) {
         alert(works)
     } else {
-        works.forEach(work => galleryPrincipal.appendChild(createItemGalleryPrincipal(work)))
-        works.forEach(work => galleryModal.appendChild(createItemGalleryModal(work)))
+        works.forEach(work => {
+            galleryPrincipal.appendChild(createItemGalleryPrincipal(work))
+            galleryModal.appendChild(createItemGalleryModal(work))
+        }
+        )
     }
 }
 
